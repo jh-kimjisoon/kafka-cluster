@@ -59,7 +59,7 @@ services:
       CONNECT_STATUS_STORAGE_REPLICATION_FACTOR: 1
     volumes:
       - ./plugins:/usr/share/confluent-hub-components 
-      - certs:/usr/share/elastic/config/certs
+      - ./certs:/usr/share/elastic/config/certs
     depends_on:
       zookeeper:
         condition: service_healthy
