@@ -13,7 +13,8 @@ services:
       - KAFKA_BROKER_ID=1
       - ALLOW_ANONYMOUS_LOGIN=yes
       - ZOO_4LW_COMMANDS_WHITELIST=ruok
-
+    networks:
+      - data_collection_network
     healthcheck:
       test: ["CMD-SHELL", "echo ruok | nc zookeeper 2181 | grep imok"]
       interval: 10s
@@ -35,6 +36,8 @@ services:
       - KAFKA_CFG_ZOOKEEPER_CONNECT=zookeeper:2181
       - ALLOW_PLAINTEXT_LISTENER=yes
       - KAFKA_ENABLE_KRAFT=false
+    networks:
+      - data_collection_network
     depends_on:
       zookeeper:
         condition: service_healthy
@@ -60,6 +63,8 @@ services:
     volumes:
       - ./plugins:/usr/share/confluent-hub-components 
       - ./certs:/usr/share/elastic/config/certs
+    networks:
+      - data_collection_network
     depends_on:
       zookeeper:
         condition: service_healthy
